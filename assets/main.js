@@ -1,5 +1,7 @@
 let answer = document.getElementById('answer').value;
 let divHTML = "";
+let attempt = document.getElementById('attempt').value;
+let results = document.getElementById('results');
 
  // This function generates a random number with exactly 4 digits :
  function setHiddenFields() {
@@ -52,4 +54,41 @@ let divHTML = "";
      } else {
          return false;
      }
+ }
+
+// This is the main function that called all other functions :
+ function guess() {
+
+     let input = document.getElementById('user-guess').value;
+
+     if (answer === "") {
+         setHiddenFields();
+     }
+     if (attempt === "") {
+         attempt = 0;
+     }
+
+     validateInput(input);
+
+     if (!validateInput(input)) {
+         return false;
+     } else {
+         attempt += 1;
+     }
+
+     getResults(input);
+     results.innerHTML += divHTML;
+
+     // Message and results are shown depending on the situation :
+     if (getResults(input)) {
+         setMessage("You Win! :)");
+         showAnswer(getResults(input));
+         showReplay();
+     } else if (!getResults(input) && attempt < 10) {
+         setMessage("Incorrect, try again.");
+     } else if (attempt >= 10) {
+         setMessage("You Lose! :(");
+         showAnswer(getResults(input));
+         showReplay();
+     } 
  }
