@@ -10,3 +10,9 @@ let answer = document.getElementById('answer').value;
      }
      return answer;
  }
+
+// This function displays a custom message when called :
+ function setMessage(text) {
+     let message = document.getElementById('message');
+     message.innerHTML = text;
+ }
