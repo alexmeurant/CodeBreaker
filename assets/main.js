@@ -92,3 +92,24 @@ let results = document.getElementById('results');
          showReplay();
      } 
  }
+
+// This function shows the random code to be guessed :
+ function showAnswer(isTrue) {
+     let code = document.getElementById('code');
+     code.innerHTML = answer;
+     if (isTrue) {
+         code.className += " success";
+     } else {
+         code.className += " failure";
+     }
+ }
+
+ // This function gives the user the opportunity to play again :
+ function showReplay() {
+     // the guessing block is hidden:
+     let hideGuessingDiv = document.getElementById('guessing-div');
+     hideGuessingDiv.style.display = "none";
+     // the repaly block is displayed:
+     let showReplayDiv = document.getElementById('replay-div');
+     showReplayDiv.style.display = "block";
+ }
