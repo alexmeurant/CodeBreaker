@@ -16,3 +16,13 @@ let answer = document.getElementById('answer').value;
      let message = document.getElementById('message');
      message.innerHTML = text;
  }
+
+ // This function checked if the guessed number has 4 digits :
+ function validateInput(guessNumber) {
+     if (guessNumber.length === 4) {
+         return true;
+     } else {
+         setMessage("Guesses must be exactly 4 characters long.");
+         return false;
+     }
+ }
