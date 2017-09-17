@@ -36,10 +36,10 @@ function guess() {
 
     // gets the results and indications about the character's position :
     let correctCharacter = 0;
-    divHTML = '<div class="row"><span class="col-md-6">' + guessNumber + '</span><div class="col-md-6">';
+    divHTML = '<div class="row"><span class="col-md-6">' + input + '</span><div class="col-md-6">';
 
-    for (var i = 0; i < guessNumber.length; i++) {
-        let guessCharacter = guessNumber.charAt(i);
+    for (var i = 0; i < input.length; i++) {
+        let guessCharacter = input.charAt(i);
         if (guessCharacter === answer.charAt(i)) {
             divHTML += '<span class="glyphicon glyphicon-ok"></span>';
             correctCharacter += 1;
