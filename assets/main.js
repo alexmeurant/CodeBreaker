@@ -20,7 +20,6 @@ function guess() {
                 answer = "0" + answer;
             }
         }
-        return answer;
     }
 
     // attempt number is set to 0 at the beginning:
