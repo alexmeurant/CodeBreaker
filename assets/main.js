@@ -1,15 +1,17 @@
+let answer = document.getElementById('answer').value;
+let divHTML = "";
+let correctCharacter;
+let attempt = document.getElementById('attempt').value;
+const results = document.getElementById('results');
+const message = document.getElementById('message');
+const code = document.getElementById('code');
+const hideGuessingDiv = document.getElementById('guessing-div');
+const showReplayDiv = document.getElementById('replay-div');
+
+// Main functions that includes all other functions:
 function guess() {
 
-    let answer = document.getElementById('answer').value;
     let input = document.getElementById('user-guess').value;
-    let divHTML = "";
-    let correctCharacter;
-    let attempt = document.getElementById('attempt').value;
-    const results = document.getElementById('results');
-    const message = document.getElementById('message');
-    const code = document.getElementById('code');
-    const hideGuessingDiv = document.getElementById('guessing-div');
-    const showReplayDiv = document.getElementById('replay-div');
 
     message.innerHTML = "";
 
@@ -55,7 +57,7 @@ function guess() {
                 divHTML += '<span class="glyphicon glyphicon-remove"></span>';
             }
         }
-        
+
         divHTML += '</div></div>';
 
         if (correctCharacter === 4) {
