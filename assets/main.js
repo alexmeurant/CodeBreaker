@@ -1,65 +1,120 @@
-function guess(){
+function guess() {
+
     let answer = document.getElementById('answer').value;
-    let attempt = document.getElementById('attempt').value;
-    let code = document.getElementById('code');
-    let guessingDiv = document.getElementById('guessing-div');
     let input = document.getElementById('user-guess').value;
-    let message = document.getElementById('message');
-    let replayDiv = document.getElementById('replay-div');
-    let results = document.getElementById('results');
+    let divHTML = "";
+    let correctCharacter;
+    let attempt = document.getElementById('attempt').value;
+    const results = document.getElementById('results');
+    const message = document.getElementById('message');
+    const code = document.getElementById('code');
+    const hideGuessingDiv = document.getElementById('guessing-div');
+    const showReplayDiv = document.getElementById('replay-div');
 
     message.innerHTML = "";
 
-    if(answer == "") {
+    // This function generates a random number with exactly 4 digits :
+    function setHiddenFields() {
         answer = Math.floor(Math.random() * 10000).toString();
-        while(answer.length < 4) {
-            answer = "0" + answer;
+        if (answer.length !== 4) {
+            while (answer.length < 4) {
+                answer = "0" + answer;
+            }
         }
-        document.getElementById('answer').value = answer;
+        return answer;
     }
-    if(attempt == "") {
+
+    // This function displays a custom message when called :
+    function setMessage(text) {
+        message.innerHTML = text;
+    }
+
+    // This function checked if the guessed number has 4 digits :
+    function validateInput(guessNumber) {
+        if (guessNumber.length === 4) {
+            return true;
+        } else {
+            setMessage("Guesses must be exactly 4 characters long.");
+            return false;
+        }
+    }
+
+    // This function get the results and indications about the digit position :
+    function getResults(guessNumber) {
+        correctCharacter = 0;
+        divHTML = '<div class="row"><span class="col-md-6">' + guessNumber + '</span><div class="col-md-6">';
+
+        for (var i = 0; i < guessNumber.length; i++) {
+            let guessCharacter = guessNumber.charAt(i);
+            if (guessCharacter === answer.charAt(i)) {
+                divHTML += '<span class="glyphicon glyphicon-ok"></span>';
+                correctCharacter += 1;
+            } else if (answer.indexOf(guessCharacter) > -1) {
+                divHTML += '<span class="glyphicon glyphicon-transfer"></span>';
+            } else {
+                divHTML += '<span class="glyphicon glyphicon-remove"></span>';
+            }
+        }
+        
+        divHTML += '</div></div>';
+
+        if (correctCharacter === 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // This function shows the random code to be guessed :
+    function showAnswer(isTrue) {
+        code.innerHTML = answer;
+        if (isTrue) {
+            code.className += " success";
+        } else {
+            code.className += " failure";
+        }
+    }
+
+    // This function gives the user the opportunity to play again :
+    function showReplay() {
+        // the guessing block is hidden:
+        hideGuessingDiv.style.display = "none";
+        // the repaly block is displayed:
+        showReplayDiv.style.display = "block";
+    }
+
+    /* ------------------------------------------------------------------------
+                   All functions above (inside guess()) are called here:
+    --------------------------------------------------------------------------*/
+
+    if (answer === "") {
+        setHiddenFields();
+    }
+    if (attempt === "") {
         attempt = 0;
     }
 
-    if(input.length != 4) {
-        message.innerHTML = 'Guesses must be exactly 4 characters long.';
-        return;
+    validateInput(input);
+
+    if (!validateInput(input)) {
+        return false;
     } else {
-        attempt++;
-        document.getElementById('attempt').value = attempt;
+        attempt += 1;
     }
 
-    let correct = 0;
-    let html = '<div class="row"><span class="col-md-6">' + input + '</span><div class="col-md-6">';
-    for(i = 0; i < input.length; i++)
-    {
-        if(input.charAt(i) == answer.charAt(i))
-        {
-            html += '<span class="glyphicon glyphicon-ok"></span>';
-            correct++;
-        } else if (answer.indexOf(input.charAt(i)) > -1) {
-            html += '<span class="glyphicon glyphicon-transfer"></span>';
-        } else {
-            html += '<span class="glyphicon glyphicon-remove"></span>';
-        }
-    }
-    html += '</div></div>';
+    getResults(input);
+    results.innerHTML += divHTML;
 
-    results.innerHTML += html;
-
-    if(correct == input.length) {
-        message.innerHTML = 'You Win! :)';
-        code.className += " success";
-        code.innerHTML = answer;
-        guessingDiv.style = "display:none";
-        replayDiv.style = "display:block";
-    } else if(attempt >= 10) {
-        message.innerHTML = 'You Lose! :(';
-        code.className += " failure";
-        code.innerHTML = answer;
-        guessingDiv.style = "display:none";
-        replayDiv.style = "display:block";
-    } else {
-        message.innerHTML = 'Incorrect, try again.';
+    // Message and results are shown depending on the situation :
+    if (getResults(input)) {
+        setMessage("You Win! :)");
+        showAnswer(getResults(input));
+        showReplay();
+    } else if (!getResults(input) && attempt < 10) {
+        setMessage("Incorrect, try again.");
+    } else if (attempt >= 10) {
+        setMessage("You Lose! :(");
+        showAnswer(getResults(input));
+        showReplay();
     }
 }
