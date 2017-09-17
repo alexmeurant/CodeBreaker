@@ -11,6 +11,14 @@ function guess() {
     let input = document.getElementById('user-guess').value;
 
     message.innerHTML = "";
+    
+    // This function gives the user the opportunity to play again :
+    function showReplay() {
+        // the guessing block is hidden:
+        hideGuessingDiv.style.display = "none";
+        // the repaly block is displayed:
+        showReplayDiv.style.display = "block";
+    }
 
     // generates a random number with exactly 4 digits :
     if (answer === "") {
@@ -20,6 +28,7 @@ function guess() {
                 answer = "0" + answer;
             }
         }
+        document.getElementById('answer').value = answer;
     }
 
     // attempt number is set to 0 at the beginning:
@@ -29,9 +38,11 @@ function guess() {
 
     // checks if the guessed number has 4 digits :
     if (input.length === 4) {
-        attempt += 1;
+        attempt++;
+        document.getElementById('attempt').value = attempt;
     } else {
         message.innerHTML = "Guesses must be exactly 4 characters long.";
+        return;
     }
 
     // gets the results and indications about the character's position :
@@ -57,24 +68,16 @@ function guess() {
     
     // Message and results are shown depending on the situation :
     if (correctCharacter === 4) {
-        code.innerHTML = answer;
         message.innerHTML = "You Win! :)";
         code.className += " success";
         showReplay();
+        return code.innerHTML = answer;
     } else if (attempt < 10){
         message.innerHTML = "Incorrect, try again.";
     } else if (attempt >= 10){
-        code.innerHTML = answer;
         message.innerHTML = "You Lose! :(";
         code.className += " failure";
         showReplay();
-    }
-    
-    // This function gives the user the opportunity to play again :
-    function showReplay() {
-        // the guessing block is hidden:
-        hideGuessingDiv.style.display = "none";
-        // the repaly block is displayed:
-        showReplayDiv.style.display = "block";
+        return code.innerHTML = answer;
     }
 }
