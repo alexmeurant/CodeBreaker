@@ -47,7 +47,7 @@ function guess() {
 
     // gets the results and indications about the character's position :
     let correctCharacter = 0;
-    divHTML = '<div class="row"><span class="col-md-6">' + input + '</span><div class="col-md-6">';
+    divHTML = '<div class="row"><span class="col-xs-6">' + input + '</span><div class="col-xs-6">';
 
     for (var i = 0; i < input.length; i++) {
         let guessCharacter = input.charAt(i);
